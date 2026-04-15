@@ -1,0 +1,17 @@
+{
+  "Nome": "nome da pessoa",
+  "Cargo": "cargo no LABIIA",
+  "Formação": "formacao principal",
+  "Imagem": "url da imagem de perfil ou integrantes/img/imagem.jpg",
+  "Minibiografia": "Resumo curto sobre trajetoria, pesquisa e temas de interesse.",
+  "Links importantes": [
+    {
+      "titulo": "Lattes",
+      "url": "https://exemplo.org/lattes"
+    },
+    {
+      "titulo": "LinkedIn",
+      "url": "https://linkedin.com/in/exemplo"
+    }
+  ]
+}

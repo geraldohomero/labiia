@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Post | Blog LABIIA</title>
+  <meta name="description" content="Post do blog do LABIIA LAB carregado a partir de Markdown.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="page-glow" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="index.html" aria-label="Início">
+      <span class="brand-mark">LABIIA</span>
+      <span class="brand-sub">Laboratório Interdisciplinar</span>
+    </a>
+    <button class="nav-toggle" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="main-nav">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <nav class="main-nav" id="main-nav" aria-label="Navegação principal">
+      <a href="index.html">Início</a>
+      <a href="quemsomos.html">Quem somos</a>
+      <a href="blog.html" class="active">Blog</a>
+    </nav>
+  </header>
+
+  <main class="blog-main">
+    <article class="hero reveal" id="post-content" aria-live="polite">
+      <p class="preview-meta">Carregando...</p>
+      <h1>Buscando post em Markdown</h1>
+      <p>Aguarde alguns instantes.</p>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <p>LABIIA LAB • Blog</p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

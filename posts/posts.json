@@ -1,0 +1,16 @@
+{
+  "posts": [
+    {
+      "slug": "checklist-llm-pesquisa",
+      "file": "checklist-llm-pesquisa.md"
+    },
+    {
+      "slug": "deepfakes-campanhas",
+      "file": "deepfakes-campanhas.md"
+    },
+    {
+      "slug": "marco-regulatorio-ia",
+      "file": "marco-regulatorio-ia.md"
+    }
+  ]
+}
