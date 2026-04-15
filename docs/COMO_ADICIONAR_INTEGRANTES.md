@@ -35,3 +35,35 @@ Exemplo:
 ```
 
 Pronto: o integrante aparece automaticamente na pagina `site/quemsomos.html`.
+
+## Icones de redes dos integrantes
+
+- O site NAO faz mais deteccao automatica por titulo/URL.
+- Para mostrar icone, informe obrigatoriamente o campo `icone` (ou `icon`) no link.
+- Se o campo `icone` nao existir, o link aparece em texto.
+- O link de Lattes pode ficar sem `icone` para manter texto puro.
+
+```json
+{ "titulo": "Instagram", "url": "https://instagram.com/seu-perfil", "icone": "fa-brands fa-instagram" }
+```
+
+- O valor deve ser uma classe do Font Awesome (ex.: `fa-brands fa-linkedin`, `fa-brands fa-orcid`).
+
+## Redes oficiais do LABIIA (JSON)
+
+As redes exibidas no card principal da home e no card de `Quem somos` sao carregadas de:
+
+- `site/redes/labiia.json`
+
+Modelo:
+
+```json
+{
+  "redes": [
+    { "titulo": "Instagram", "url": "https://instagram.com/seu-perfil", "icone": "fa-brands fa-instagram" },
+    { "titulo": "X", "url": "https://x.com/seu-perfil", "icone": "fa-brands fa-x-twitter" }
+  ]
+}
+```
+
+Para adicionar ou remover redes do LABIIA, basta editar esse arquivo.

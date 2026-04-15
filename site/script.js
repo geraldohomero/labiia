@@ -146,20 +146,100 @@ function buildIntegranteProfileUrl(slug) {
   return `integrante.html?slug=${encodeURIComponent(slug)}`;
 }
 
+function resolveConfiguredIconClass(rawIcon) {
+  const value = String(rawIcon || '').trim().toLocaleLowerCase('pt-BR');
+  if (!value) {
+    return '';
+  }
+
+  // Accept explicit Font Awesome classes directly from JSON.
+  if (value.includes('fa-')) {
+    const allowedTokens = value
+      .split(/\s+/)
+      .map((token) => token.replace(/[^a-z0-9-]/g, ''))
+      .filter((token) => token.startsWith('fa'));
+
+    return allowedTokens.join(' ').trim();
+  }
+
+  // Backward-compatible aliases mapped to Font Awesome.
+  const aliasMap = {
+    'brand-instagram': 'fa-brands fa-instagram',
+    'brand-x': 'fa-brands fa-x-twitter',
+    'brand-bluesky': 'fa-brands fa-bluesky',
+    'brand-linkedin': 'fa-brands fa-linkedin',
+    'brand-youtube': 'fa-brands fa-youtube',
+    'brand-github': 'fa-brands fa-github',
+    orcid: 'fa-brands fa-orcid',
+    'id-badge-2': 'fa-brands fa-orcid',
+  };
+
+  if (aliasMap[value]) {
+    return aliasMap[value];
+  }
+
+  const normalized = value
+    .replace(/^fa\s+/, '')
+    .replace(/^fa-/, '')
+    .replace(/^icon-/, '');
+  const safeToken = normalized.replace(/[^a-z0-9-]/g, '');
+
+  if (!safeToken) {
+    return '';
+  }
+
+  return `fa-brands fa-${safeToken}`;
+}
+
+function buildSocialLink(link, cssClassName) {
+  const title = escapeHtml(link.titulo || 'Link');
+  const url = escapeHtml(link.url || '#');
+  const rawIcon = String(link.icone || link.icon || '').trim().toLocaleLowerCase('pt-BR');
+  const iconClass = resolveConfiguredIconClass(rawIcon);
+  const hasIcon = Boolean(iconClass);
+  const linkClasses = `${cssClassName}${hasIcon ? ' icon-only' : ' no-icon'}`;
+
+  return `<a class="${linkClasses}" href="${url}" target="_blank" rel="noopener noreferrer" aria-label="${title}" title="${title}">${hasIcon ? `<span class="social-icon" aria-hidden="true"><i class="${iconClass}"></i></span>` : `<span>${title}</span>`}</a>`;
+}
+
 function buildImportantLinks(links) {
   if (!Array.isArray(links) || !links.length) {
     return '<p class="preview-meta">Sem links cadastrados.</p>';
   }
 
   const items = links
-    .map((link) => {
-      const title = escapeHtml(link.titulo || 'Link');
-      const url = escapeHtml(link.url || '#');
-      return `<a class="integrante-link" href="${url}" target="_blank" rel="noopener noreferrer">${title}</a>`;
-    })
+    .map((link) => buildSocialLink(link, 'integrante-link'))
     .join('');
 
   return `<div class="important-links-inline">${items}</div>`;
+}
+
+function buildLabSocialLinks(links) {
+  if (!Array.isArray(links) || !links.length) {
+    return '<p class="preview-meta">Sem redes cadastradas.</p>';
+  }
+
+  return links.map((link) => buildSocialLink(link, 'social-link')).join('');
+}
+
+async function loadLabSocialLinks() {
+  const containers = document.querySelectorAll('#labiia-social-links');
+  if (!containers.length) {
+    return;
+  }
+
+  try {
+    const data = await fetchJson('redes/labiia.json');
+    const html = buildLabSocialLinks(data.redes || []);
+    containers.forEach((container) => {
+      container.innerHTML = html;
+    });
+  } catch (error) {
+    containers.forEach((container) => {
+      container.innerHTML = '<p class="preview-meta">Não foi possível carregar as redes do LABIIA.</p>';
+    });
+    console.error(error);
+  }
 }
 
 function buildIntegranteCard(person) {
@@ -720,6 +800,7 @@ async function initPage() {
   wireThemeToggle();
 
   await Promise.all([
+    loadLabSocialLinks(),
     loadBlogList(),
     loadPostPage(),
     loadIntegrantesPage(),

@@ -1,0 +1,29 @@
+{
+  "redes": [
+    {
+      "titulo": "Instagram",
+      "url": "https://instagram.com/labiia.lab",
+      "icone": "fa-brands fa-instagram"
+    },
+    {
+      "titulo": "X",
+      "url": "https://x.com/labiia_lab",
+      "icone": "fa-brands fa-x-twitter"
+    },
+    {
+      "titulo": "Bluesky",
+      "url": "https://bsky.app/profile/labiia.bsky.social",
+      "icone": "fa-brands fa-bluesky"
+    },
+    {
+      "titulo": "LinkedIn",
+      "url": "https://linkedin.com/company/labiia",
+      "icone": "fa-brands fa-linkedin"
+    },
+    {
+      "titulo": "YouTube",
+      "url": "https://youtube.com/@labiia",
+      "icone": "fa-brands fa-youtube"
+    }
+  ]
+}
