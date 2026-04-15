@@ -1,8 +1,9 @@
 ---
-title: Marco regulatório de IA: cinco perguntas para universidades
+title: "Marco regulatório de IA: cinco perguntas para universidades"
 categories: regulação
 authors: rafael-sampaio
-date: Abr 2026
+date: 2026-04-01
+dateLabel: Abr 2026
 excerpt: Pontos para avaliar governança, responsabilidade institucional e transparência em ambientes de pesquisa.
 ---
 

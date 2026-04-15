@@ -1,8 +1,9 @@
 ---
-title: Deepfakes em campanhas: onde começa o dano democrático
+title: "Deepfakes em campanhas: onde começa o dano democrático"
 categories: política, análise
 authors: rafael-sampaio, geraldo-homero
-date: Abr 2026
+date: 2026-04-01
+dateLabel: Abr 2026
 excerpt: Indicadores de risco e limites práticos para detectar escalada de desinformação audiovisual.
 ---
 

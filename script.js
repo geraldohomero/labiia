@@ -163,6 +163,14 @@ function parseFrontMatter(markdownText) {
 
     const key = line.slice(0, separatorIndex).trim();
     const rawValue = line.slice(separatorIndex + 1).trim();
+    if (
+      (rawValue.startsWith('"') && rawValue.endsWith('"')) ||
+      (rawValue.startsWith("'") && rawValue.endsWith("'"))
+    ) {
+      metadata[key] = rawValue.slice(1, -1);
+      return;
+    }
+
     metadata[key] = rawValue;
   });
 
@@ -414,7 +422,7 @@ async function loadBlogList() {
           categories,
           categoryLabels,
           authorLinks,
-          date: metadata.date || post.date || 'Sem data',
+          date: metadata.dateLabel || metadata.displayDate || metadata.date || post.date || 'Sem data',
           title: metadata.title || post.title || 'Sem título',
           excerpt: metadata.excerpt || post.excerpt || 'Sem resumo.',
         };
@@ -476,7 +484,7 @@ async function loadPostPage() {
         ...author,
         url: author.slug ? buildIntegranteProfileUrl(author.slug) : '',
       }));
-    const date = metadata.date || post.date || 'Sem data';
+    const date = metadata.dateLabel || metadata.displayDate || metadata.date || post.date || 'Sem data';
     const excerpt = metadata.excerpt || post.excerpt || '';
 
     const tocResult = buildPostTocAndHtml(body);

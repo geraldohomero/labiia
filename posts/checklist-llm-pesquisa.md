@@ -2,7 +2,8 @@
 title: Checklist minimo para usar LLM em pesquisa qualitativa
 categories: Análise
 authors: geraldo-homero
-date: Abr 2026
+date: 2026-04-01
+dateLabel: Abr 2026
 excerpt: Como reduzir vieses, registrar decisoes e manter rastreabilidade das inferencias em estudos de texto.
 ---
 

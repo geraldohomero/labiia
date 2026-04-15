@@ -2,7 +2,8 @@
 title: Titulo do post
 categories: método, política
 authors: geraldo-homero
-date: Abr 2026
+date: 2026-04-01
+dateLabel: Abr 2026
 excerpt: Escreva aqui um resumo curto em uma frase.
 ---
 

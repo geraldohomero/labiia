@@ -17,7 +17,8 @@ No topo do arquivo, mantenha este formato:
 title: Titulo do post
 categories: método, política
 authors: geraldo-homero
-date: Abr 2026
+date: 2026-04-01
+dateLabel: Abr 2026
 excerpt: Resumo curto em uma frase.
 ---
 ```
@@ -31,6 +32,10 @@ Para usar mais de uma categoria no mesmo post, separe com virgula:
 - `categories: método, política`
 
 Os rótulos visíveis são gerados automaticamente pelo site.
+
+Sobre data:
+- `date` deve estar no formato ISO para compatibilidade com GitHub Pages/Jekyll (ex.: `2026-04-01`).
+- `dateLabel` controla como a data aparece no site (ex.: `Abr 2026`).
 
 Autores do post:
 - Use `authors` com o slug do integrante (nome do arquivo em `integrantes/` sem `.json`).
