@@ -4,8 +4,8 @@ Este site agora usa arquivos Markdown para os artigos.
 
 ## 1) Criar o arquivo do post
 
-1. Entre na pasta `posts/`.
-2. Duplique o arquivo `modelo-post.md`.
+1. Entre na pasta `site/posts/`.
+2. Duplique o arquivo `site/posts/modelo-post.md`.
 3. Renomeie para algo curto, por exemplo: `ia-na-educacao.md`.
 
 ## 2) Preencher o cabecalho do post
@@ -16,7 +16,7 @@ No topo do arquivo, mantenha este formato:
 ---
 title: Titulo do post
 categories: método, política
-authors: geraldo-homero
+authors: nome-do-autor
 date: 2026-04-01
 dateLabel: Abr 2026
 excerpt: Resumo curto em uma frase.
@@ -38,9 +38,9 @@ Sobre data:
 - `dateLabel` controla como a data aparece no site (ex.: `Abr 2026`).
 
 Autores do post:
-- Use `authors` com o slug do integrante (nome do arquivo em `integrantes/` sem `.json`).
-- Exemplo: `authors: geraldo-homero`
-- Para mais de um autor: `authors: geraldo-homero, rafael-sampaio`
+- Use `authors` com o slug do integrante (nome do arquivo em `site/integrantes/` sem `.json`).
+- Exemplo: `authors: geraldo-couto-neto`
+- Para mais de um autor: `authors: geraldo-couto-neto, rafael-sampaio`
 
 ## 3) Escrever o conteudo em Markdown
 
@@ -57,7 +57,7 @@ Paragrafo normal.
 
 ## 4) Registrar no arquivo de lista
 
-Abra `posts/posts.json` e adicione uma entrada na lista `posts`:
+Abra `site/posts/posts.json` e adicione uma entrada na lista `posts`:
 
 ```json
 {
@@ -72,6 +72,6 @@ Regras:
 
 ## 5) Pronto
 
-O post aparece automaticamente em `blog.html` e abre em `post.html?slug=...`.
+O post aparece automaticamente em `site/blog.html` e abre em `site/post.html?slug=...`.
 
 Se nao carregar, rode o projeto em servidor local (ex.: extensao Live Server no VS Code).
