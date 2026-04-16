@@ -22,6 +22,7 @@
   --bg-node-b: rgba(194, 65, 12, 0.12);
   --bg-node-c: rgba(12, 74, 110, 0.11);
   --bg-line: rgba(15, 76, 219, 0.06);
+  --page-bg-image: url('assets/img/background-light.png');
   --content-max: 1100px;
   --page-gutter: 1rem;
 }
@@ -50,6 +51,7 @@
   --bg-node-b: rgba(251, 191, 36, 0.12);
   --bg-node-c: rgba(56, 189, 248, 0.12);
   --bg-line: rgba(148, 163, 184, 0.14);
+  --page-bg-image: url('assets/img/background-dark.png');
 }
 
 * {
@@ -86,14 +88,10 @@ body::after {
 }
 
 body::before {
-  background: url('assets/img/background.png') center / cover no-repeat;
-  filter: blur(9px) invert(1);
+  background: var(--page-bg-image) center / cover no-repeat;
+  filter: blur(9px);
   transform: scale(1.04);
   z-index: -2;
-}
-
-:root[data-theme='dark'] body::before {
-  filter: blur(9px) invert(0);
 }
 
 body::after {
@@ -187,6 +185,16 @@ a {
   color: var(--ink);
   display: inline-flex;
   flex-direction: column;
+}
+
+.brand-logo {
+  width: clamp(24px, 8vw, 110px);
+  height: auto;
+  filter: none;
+}
+
+:root[data-theme='dark'] .brand-logo {
+  filter: invert(1);
 }
 
 .brand-mark {
@@ -294,6 +302,18 @@ main::after {
 .blog-hero h1 {
   font-size: clamp(2rem, 5vw, 3.4rem);
   margin-bottom: 0.8rem;
+}
+
+.blog-title-logo {
+  width: clamp(86px, 10vw, 150px);
+  height: auto;
+  vertical-align: middle;
+  margin-left: 0.35rem;
+  filter: none;
+}
+
+:root[data-theme='dark'] .blog-title-logo {
+  filter: invert(1);
 }
 
 .hero-copy {
@@ -512,9 +532,7 @@ main::after {
   font-size: 0.88rem;
 }
 
-.blog-main {
-  padding-top: 0.5rem;
-}
+
 
 .filters {
   display: flex;

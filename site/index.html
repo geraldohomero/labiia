@@ -5,7 +5,44 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LABIIA | IA, Democracia e Sociedade</title>
   <meta name="description" content="Site institucional do LABIIA LAB - pesquisa sobre IA generativa, política e democracia.">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/css/tabler.min.css">
+  <script>
+    (function () {
+      const themeKey = 'labiia-theme';
+      const backgroundKey = 'labiia-bg-image';
+      const bgLight = 'assets/img/background-light.png';
+      const bgDark = 'assets/img/background-dark.png';
+      let theme = '';
+      try {
+        const saved = localStorage.getItem(themeKey);
+        theme = saved === 'dark' || saved === 'light'
+          ? saved
+          : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      } catch (_error) {
+        theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      const expectedBackground = theme === 'dark' ? bgDark : bgLight;
+      let backgroundPath = expectedBackground;
+      try {
+        const storedBackground = localStorage.getItem(backgroundKey);
+        backgroundPath = storedBackground === expectedBackground
+          ? storedBackground
+          : expectedBackground;
+      } catch (_error) {
+        backgroundPath = expectedBackground;
+      }
+
+      const root = document.documentElement;
+      root.setAttribute('data-theme', theme);
+      root.style.setProperty('--page-bg-image', `url('${backgroundPath}')`);
+
+      try {
+        localStorage.setItem(backgroundKey, backgroundPath);
+      } catch (_error) {
+        // Ignore storage failures.
+      }
+    })();
+  </script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,7 +56,7 @@
   <main>
     <section class="hero reveal">
       <p class="kicker">Pesquisa crítica sobre IA generativa no Brasil</p>
-      <h1>LABIIA LAB: evidência, método e impacto público</h1>
+      <h1>Evidência, Método e Impacto Público</h1>
       <p class="hero-copy">
         Investigamos como modelos generativos mudam o conhecimento, a disputa política e as condições da democracia.
         Atuamos entre comunicação, ciência política, direito, educação, saúde e tecnologia.
@@ -41,21 +78,11 @@
         <h2>Últimos posts</h2>
         <p>Análises curtas e aplicadas sobre IA, método, política e regulação.</p>
       </div>
-      <div class="preview-grid">
+      <div class="preview-grid" id="home-posts-preview" aria-live="polite">
         <article class="preview-card">
-          <p class="preview-meta">Abr 2026 • Método</p>
-          <h3>Checklist mínimo para usar LLM em pesquisa qualitativa</h3>
-          <a href="post.html?slug=checklist-llm-pesquisa">Ler artigo</a>
-        </article>
-        <article class="preview-card">
-          <p class="preview-meta">Abr 2026 • Política</p>
-          <h3>Deepfakes em campanhas: onde começa o dano democrático</h3>
-          <a href="post.html?slug=deepfakes-campanhas">Ler artigo</a>
-        </article>
-        <article class="preview-card">
-          <p class="preview-meta">Abr 2026 • Regulação</p>
-          <h3>Marco regulatório de IA: cinco perguntas para universidades</h3>
-          <a href="post.html?slug=marco-regulatorio-ia">Ler artigo</a>
+          <p class="preview-meta">Carregando...</p>
+          <h3>Buscando posts recentes</h3>
+          <p>Se essa mensagem não sair, verifique se o servidor local está ativo.</p>
         </article>
       </div>
       <a class="btn btn-primary" href="blog.html">Ver todos os posts</a>
@@ -64,7 +91,6 @@
 
   <div id="site-footer"></div>
 
-  <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.4.0/dist/js/tabler.min.js"></script>
   <script src="script.js"></script>
 </body>
 </html>

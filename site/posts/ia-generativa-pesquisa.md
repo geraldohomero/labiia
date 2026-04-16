@@ -1,7 +1,7 @@
 ---
-title: Titulo do post
-categories: método, política
-authors: nome-autor
+title: IA Generativa em pesquisa: cinco perguntas para avaliar riscos e oportunidades
+categories: método, análise, pesquisa
+authors: geraldo-couto-neto
 date: 2026-04-01
 excerpt: Escreva aqui um resumo curto em uma frase.
 ---
@@ -16,3 +16,5 @@ Desenvolva a ideia principal.
 
 Continue com os pontos mais importantes.
 
+- Item opcional
+- Outro item opcional

@@ -7,8 +7,11 @@ async function fetchText(path) {
 }
 
 const THEME_STORAGE_KEY = 'labiia-theme';
+const BACKGROUND_STORAGE_KEY = 'labiia-bg-image';
 const THEME_LIGHT = 'light';
 const THEME_DARK = 'dark';
+const BACKGROUND_LIGHT_PATH = 'assets/img/background-light.png';
+const BACKGROUND_DARK_PATH = 'assets/img/background-dark.png';
 
 function getCurrentPageKey() {
   return String(document.body?.dataset?.page || '').trim();
@@ -65,9 +68,29 @@ function updateThemeToggleUi(theme) {
   });
 }
 
+function getBackgroundPathForTheme(theme) {
+  return theme === THEME_DARK ? BACKGROUND_DARK_PATH : BACKGROUND_LIGHT_PATH;
+}
+
+function applyBackgroundPath(path) {
+  const safePath = String(path || '').trim() || BACKGROUND_LIGHT_PATH;
+  document.documentElement.style.setProperty('--page-bg-image', `url('${safePath}')`);
+}
+
+function persistBackgroundPath(path) {
+  try {
+    window.localStorage.setItem(BACKGROUND_STORAGE_KEY, path);
+  } catch (_error) {
+    // Ignore storage failures (private mode, quota).
+  }
+}
+
 function applyTheme(theme) {
   const safeTheme = theme === THEME_DARK ? THEME_DARK : THEME_LIGHT;
+  const backgroundPath = getBackgroundPathForTheme(safeTheme);
   document.documentElement.setAttribute('data-theme', safeTheme);
+  applyBackgroundPath(backgroundPath);
+  persistBackgroundPath(backgroundPath);
   updateThemeToggleUi(safeTheme);
 }
 
@@ -368,6 +391,16 @@ function buildPostCard(post) {
   `;
 }
 
+function buildHomePreviewCard(post) {
+  return `
+    <article class="preview-card">
+      <p class="preview-meta">${escapeHtml(post.date)} • ${escapeHtml(post.categoryLabel)}</p>
+      <h3>${escapeHtml(post.title)}</h3>
+      <a href="post.html?slug=${encodeURIComponent(post.slug)}">Ler artigo</a>
+    </article>
+  `;
+}
+
 function parseListValue(rawValue) {
   if (!rawValue) {
     return [];
@@ -377,6 +410,27 @@ function parseListValue(rawValue) {
     .split(',')
     .map((item) => item.trim())
     .filter(Boolean);
+}
+
+function formatPostDatePtBr(rawDate) {
+  const value = String(rawDate || '').trim();
+  if (!value) {
+    return 'Sem data';
+  }
+
+  // Keep YYYY-MM-DD stable without timezone side effects.
+  const isoDateMatch = value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  if (isoDateMatch) {
+    const [, year, month, day] = isoDateMatch;
+    return `${day}/${month}/${year}`;
+  }
+
+  const parsed = new Date(value);
+  if (Number.isNaN(parsed.getTime())) {
+    return 'Sem data';
+  }
+
+  return new Intl.DateTimeFormat('pt-BR').format(parsed);
 }
 
 function normalizeCategoryValue(category) {
@@ -593,7 +647,7 @@ async function loadBlogList() {
           categories,
           categoryLabels,
           authorLinks,
-          date: metadata.dateLabel || metadata.displayDate || metadata.date || post.date || 'Sem data',
+          date: formatPostDatePtBr(metadata.date || post.date),
           title: metadata.title || post.title || 'Sem título',
           excerpt: metadata.excerpt || post.excerpt || 'Sem resumo.',
         };
@@ -609,6 +663,52 @@ async function loadBlogList() {
         <p class="preview-meta">Erro</p>
         <h2>Não foi possível carregar os posts</h2>
         <p>Tente abrir o site com servidor local (ex.: Live Server) para habilitar o carregamento dos arquivos Markdown.</p>
+      </article>
+    `;
+    console.error(error);
+  }
+}
+
+async function loadHomeLatestPosts() {
+  const grid = document.querySelector('#home-posts-preview');
+  if (!grid) {
+    return;
+  }
+
+  try {
+    const manifest = await fetchJson('posts/posts.json');
+    const posts = await Promise.all(
+      manifest.posts.map(async (post, postIndex) => {
+        const markdown = await fetchText(`posts/${post.file}`);
+        const { metadata } = parseFrontMatter(markdown);
+        const categoriesRaw = parseListValue(
+          metadata.categories || metadata.category || post.categories || post.category || 'método'
+        );
+        const categoryLabel = formatCategoryLabel(categoriesRaw[0] || 'Categoria');
+        const rawDate = metadata.date || post.date || '';
+        const parsedDate = Date.parse(String(rawDate));
+
+        return {
+          slug: post.slug,
+          date: formatPostDatePtBr(rawDate),
+          categoryLabel,
+          title: metadata.title || post.title || 'Sem título',
+          publishedAtTs: Number.isNaN(parsedDate) ? -1 : parsedDate,
+          sourceIndex: postIndex,
+        };
+      })
+    );
+
+    const latestPosts = [...posts]
+      .sort((left, right) => right.publishedAtTs - left.publishedAtTs || right.sourceIndex - left.sourceIndex)
+      .slice(0, 3);
+    grid.innerHTML = latestPosts.map(buildHomePreviewCard).join('');
+  } catch (error) {
+    grid.innerHTML = `
+      <article class="preview-card">
+        <p class="preview-meta">Erro</p>
+        <h3>Não foi possível carregar os posts</h3>
+        <p>Tente abrir o site com servidor local (ex.: Live Server) para habilitar o carregamento dos arquivos.</p>
       </article>
     `;
     console.error(error);
@@ -655,7 +755,7 @@ async function loadPostPage() {
         ...author,
         url: author.slug ? buildIntegranteProfileUrl(author.slug) : '',
       }));
-    const date = metadata.dateLabel || metadata.displayDate || metadata.date || post.date || 'Sem data';
+    const date = formatPostDatePtBr(metadata.date || post.date);
     const excerpt = metadata.excerpt || post.excerpt || '';
 
     const tocResult = buildPostTocAndHtml(body);
@@ -743,7 +843,7 @@ async function loadIntegranteProfilePage() {
       return {
         slug: post.slug,
         title: metadata.title || post.title || 'Sem título',
-        date: metadata.date || post.date || 'Sem data',
+        date: formatPostDatePtBr(metadata.date || post.date),
         excerpt: metadata.excerpt || post.excerpt || 'Sem resumo.',
         categoryLabels,
       };
@@ -801,6 +901,7 @@ async function initPage() {
 
   await Promise.all([
     loadLabSocialLinks(),
+    loadHomeLatestPosts(),
     loadBlogList(),
     loadPostPage(),
     loadIntegrantesPage(),
