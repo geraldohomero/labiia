@@ -1,11 +1,13 @@
 {
   "integrantes": [
-        {
+    {
       "file": "rafael-sampaio.json"
     },
     {
       "file": "geraldo-couto-neto.json"
+    },
+    {
+      "file": "jao-due.json"
     }
-
   ]
 }
