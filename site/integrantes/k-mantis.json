@@ -1,0 +1,38 @@
+{
+  "Nome": "K. Mantis",
+  "Cargo": "A. As. Pesq.",
+  "Formação": "CS (UFRJ)",
+  "Imagem": "https://avatars.githubusercontent.com/u/70844369?v=4",
+  "Minibiografia": "Teste Forms",
+  "Links importantes": [
+    {
+      "titulo": "Lattes",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4"
+    },
+    {
+      "titulo": "ORCID",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4",
+      "icone": "fa-brands fa-orcid"
+    },
+    {
+      "titulo": "Instagram",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4",
+      "icone": "fa-brands fa-instagram"
+    },
+    {
+      "titulo": "X",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4",
+      "icone": "fa-brands fa-x-twitter"
+    },
+    {
+      "titulo": "Bluesky",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4",
+      "icone": "fa-brands fa-bluesky"
+    },
+    {
+      "titulo": "LinkedIn",
+      "url": "https://avatars.githubusercontent.com/u/70844369?v=4",
+      "icone": "fa-brands fa-linkedin"
+    }
+  ]
+}
